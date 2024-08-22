@@ -1,7 +1,9 @@
 function loadLinks() {
-  let list = document.querySelector('ul#links');
+  let list = $('ul#links');
 
-  let jsonLinks = JSON.parse('/links.json').map(value => value.split(' & '));
+  let jsonLinks = $.getJSON('/links.json').then(
+    value => value.map(value => value.split(' & '))
+  );
 
   for (let link of jsonLinks) {
     let listItem = document.createElement('li');
