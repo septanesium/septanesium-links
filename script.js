@@ -5,7 +5,7 @@ function loadLinks() {
     value => value.map(value => value.split(' & '))
   );
 
-  for (let link of jsonLinks) {
+  for (let link of [...jsonLinks]) {
     let listItem = document.createElement('li');
     let linkElement = document.createElement('button');
 
