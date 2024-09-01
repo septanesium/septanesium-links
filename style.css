@@ -10,17 +10,21 @@ body {
   text-shadow: 4px 4px black;
 }
 
+.small-text {
+  text-shadow: 1.5px 1.5px rgba(0, 0, 0, 0.25);
+}
+
 #ul-container {
   text-align: center;
 }
 
-ul#links {
+ul.links {
   list-style-type: none;
   list-style-position: inside;
   padding-left: 0px;
 }
 
-ul#links li {
+ul.links li {
   padding: 15px;
 }
 
@@ -31,7 +35,7 @@ li button {
   border: none;
   border-radius: 3px;
     
-  font-family: Segoe UI;
+  font-family: Segoe UI, Verdana, Tahoma;
   font-size: 20px;
   font-weight: bold;
 
@@ -41,6 +45,23 @@ li button {
   cursor: pointer;
 
   box-shadow: 3px 3px #222;
+}
+
+.no-select {
+  -moz-user-select: none;
+}
+
+.tab {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.shadowed-text {
+    text-shadow: 1.5px 1.5px rgba(0, 0, 0, 0.25);
+}
+
+.selected {
+  color: lightblue;
 }
 
 li button:hover {
