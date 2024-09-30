@@ -3,8 +3,8 @@ let tab = 0;
 const DISCORD_NAME = 'solareclipseglasses';
 const ERROR_CODE = -449;
 
-// makes it so that it doesn't fetch json from the servers everytime
-// we switch tabs
+// Stores the newly fetched link cases so we don't have to call
+// a GET request every time the user switches tabs
 let cache = {
   socialLinks: null,
   projectLinks: null
@@ -49,7 +49,7 @@ async function loadLinkFromTab(selectCase, id) {
   for (let link of links) {
     $(id).append(`
       <li>
-        <button onclick="open('${link[1]}', '_blank');">${link[0]}</button>
+        <button onclick="window.open('${link[1]}', '_blank');">${link[0]}</button>
       </li>`
     );
   }
