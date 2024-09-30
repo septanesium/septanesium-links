@@ -2,24 +2,27 @@
 <html lang="en">
 
   <head>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css"/>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Septanesium's links</title>
-    <script src="resources/links.js"></script>
+
+    <title>My links</title>
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="links.js"></script>
   </head>
 
   <body>
-    <h1 id="header">Septanesium's links</h1>
+    <h1 id="header">My links</h1>
     <div id="ul-container">
 
       <div class="no-select shadowed-text">
-        <span class="tab selected" id="social-link-tab" onclick="switchTabs(this);">Social Links</span> |
-        <span class="tab" id="project-link-tab" onclick="switchTabs(this);">Project Links</span>
+        <span class="tab" id="social-link-tab" onclick="newTab(0);">Social Links</span> |
+        <span class="tab" id="project-link-tab" onclick="newTab(1);">Project Links</span>
       </div>
 
-      <p class="small-text">Welcome to my website! I have no other meaningful public social media accounts here, <b>so if you find me in any other social media and it's not here, it's not me.</b></p>
+      <p class="small-text">Welcome to my links! I have no other meaningful public social media accounts here, <b>so if you find me in any other social media and it's not here, it's not me.</b></p>
       <ul id="social-links" class="links visible-link"></ul>
       <ul id="project-links" class="links"></ul>
       <script src="script.js"></script>
