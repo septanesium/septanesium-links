@@ -1,50 +1,80 @@
 let tab = 0;
 
-let elementLists = [
-  document.querySelector('ul#social-links'),
-  document.querySelector('ul#project-links')
+const DISCORD_NAME = 'solareclipseglasses';
+const ERROR_CODE = -449;
+
+// makes it so that it doesn't fetch json from the servers everytime
+// we switch tabs
+let cache = {
+  socialLinks: null,
+  projectLinks: null
+};
+
+let switchCases = [
+  {
+    url: 'https://api.npoint.io/3a5497dfbdf08f120bab',
+    cacheName: 'socialLinks',
+    id: '#social-links',
+    tabID: '#social-link-tab'
+  },
+  {
+    url: 'https://api.npoint.io/14594675278a58f5a7fa', 
+    cacheName: 'projectLinks',
+    id: '#project-links',
+    tabID: '#project-link-tab'
+  }
 ];
 
-function loadLinks() {
-  let linkLists = [ SOCIAL_LINKS, PROJECT_LINKS ];
-  let jsonLinks = linkLists[tab].map(value => value.split(' & '));
+const getLinks = link => link.map(v => v.split(' & '));
 
-  for (let link of jsonLinks) {
-    let listItem = document.createElement('li');
-    let buttonElement = document.createElement('button');
+async function loadLinkFromTab(selectCase, id) {
+  let result = cache[selectCase.cacheName] ?? await fetch(selectCase.url).then(r => r.json().catch(e => {
+    $(switchCases[tab].id).append(`<p>An error occured parsing the json: </br>${e} </br></br>Most likely the backend returned empty or binary data. Report this to me on discord at "${DISCORD_NAME}" and I'll investigate the bug.</p>`);
+  }
+  )).catch(e => {
+    $(switchCases[tab].id).append(`<p>An error occured fetching social links: </br>${e}</p>`);
+  }) ?? ERROR_CODE;
 
-    let url = link[1];
+  if (result === ERROR_CODE) {
+    console.error('An error occured fetching.');
+    return;
+  }
 
-    [buttonElement.textContent, buttonElement.onclick] =
-    [link[0], () => open(url, '_blank').focus()];
+  if (result !== cache[selectCase.cacheName]) {
+    cache[selectCase.cacheName] = result;
+  }
 
-    listItem.appendChild(buttonElement);
-    elementLists[tab].appendChild(listItem);
+  let links = getLinks(result);
+
+  for (let link of links) {
+    $(id).append(`
+      <li>
+        <button onclick="open('${link[1]}', '_blank');">${link[0]}</button>
+      </li>`
+    );
   }
 }
 
-function switchTabs(element) {
-  let setTabSwitchCases = {
-    'social-link-tab': 0,
-    'project-link-tab': 1
-  };
-
-  
-  document.querySelectorAll('.tab').forEach((e, index) => {
-    if (e.id != elementLists[index].id) {
-      elementLists[index].innerHTML = '';
-    }
-
-    e.classList
-    .remove('selected');
-  });
-
-  document.querySelector(`#${element.id}`).classList
-  .add('selected');
-
-  tab = setTabSwitchCases[element.id];
-
+function newTab(tabIndex) {
+  tab = tabIndex;
   loadLinks();
 }
 
-loadLinks();
+function loadLinks() {
+  for (let switchCase of switchCases) {
+    $(switchCase.id).html('');
+    $(switchCase.tabID).removeClass('selected');
+  }
+
+  let selectedCase = switchCases[tab];
+  $(selectedCase.tabID).addClass('selected');
+
+  if (typeof selectedCase === 'undefined') {
+    console.error('Invalid tab variable lol %cdon\'t play with it again', 'color:black;');
+    tab = 0;
+    return loadLinks();
+  }
+
+  loadLinkFromTab(selectedCase, selectedCase.id);
+
+} loadLinks();
