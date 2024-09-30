@@ -25,7 +25,7 @@ let switchCases = [
   }
 ];
 
-const getLinks = link => link.map(v => v.split(' & '));
+const getLinks = link => link.map(v => v.split(' : '));
 
 async function loadLinkFromTab(selectCase, id) {
   let result = cache[selectCase.cacheName] ?? await fetch(selectCase.url).then(r => r.json().catch(e => {
