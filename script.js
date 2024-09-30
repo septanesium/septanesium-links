@@ -49,7 +49,7 @@ async function loadLinkFromTab(selectCase, id) {
   for (let link of links) {
     $(id).append(`
       <li>
-        <button onclick="window.open('${link[1]}', '_blank');">${link[0]}</button>
+        <button onclick="window.open('${link[1]}', '_tab');">${link[0]}</button>
       </li>`
     );
   }
